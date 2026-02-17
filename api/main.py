@@ -33,18 +33,22 @@ def getdetails(customerid: int):
     features = row[["Recency","Frequency","Monetary"]]
 
     # print(row["Cluster"])
-    # cluster = int(row["Cluster"].values[0])
+    cluster = int(row["Cluster"].values[0])
     # print(row["Cluster"])
     clv_pred = clv_model.predict(features)[0]
     # print(clv_pred)
 
+    segment_type = row["Tags"].get(str(cluster), "Unknown")
+    seg = str(row["Tags"].values[0])
+    print(seg)
 
     return {
         "CustomerID" : customerid,
         "Recency": int(row["Recency"].values[0]),
         "Frequency": int(row["Frequency"].values[0]),
         "Monetary": int(row["Monetary"].values[0]),
-        "Cluster" : int(row["Cluster"].values[0]),
-        "Segment" : row["Tags"],
+        "Cluster" : cluster,
+        "segment" : cluster,
+        "Segment type" : seg,
         "predicted_clv" : round(clv_pred,3)
     }
